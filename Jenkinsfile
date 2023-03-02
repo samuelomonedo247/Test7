@@ -37,11 +37,11 @@ podTemplate(yaml: '''
 ''') {
   node(POD_LABEL) {
     stage('Build a gradle project') {
-      git 'https://github.com/samuelomonedo247/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
+      git 'https://github.com/samuelomonedo247/Week7'
       container('gradle') {
         stage('Build a gradle project') {
           sh '''
-          cd /home/jenkins/agent/workspace/week7/Chapter08/sample1
+          cd /home/jenkins/agent/workspace/Week7/sample1
           chmod +x gradlew
 		  sed -i '5 i /** Calc */' /home/jenkins/agent/workspace/week7/Chapter08/sample1/src/main/java/com/lezoko/
           ./gradlew build
