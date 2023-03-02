@@ -37,13 +37,12 @@ podTemplate(yaml: '''
 ''') {
   node(POD_LABEL) {
     stage('Build a gradle project') {
-      git 'https://github.com/samuelomonedo247/Week7'
+      git 'https://github.com/samuelomonedo247/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
       container('gradle') {
         stage('Build a gradle project') {
           sh '''
-          cd /home/jenkins/agent/workspace/Week7/sample1
+          cd /home/jenkins/agent/workspace/week7/Chapter08/sample1
           chmod +x gradlew
-		  sed -i '5 i /** Calc */' /home/jenkins/agent/workspace/week7/Chapter08/sample1/src/main/java/com/lezoko/
           ./gradlew build
           mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
           '''
@@ -59,7 +58,7 @@ podTemplate(yaml: '''
           echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
           echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
           mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
-          /kaniko/executor --context `pwd` --destination samuelomonedo247/hello-kaniko:1.0
+          /kaniko/executor --context `pwd` --destination dlambrig/hello-kaniko:1.0
           '''
         }
       }
