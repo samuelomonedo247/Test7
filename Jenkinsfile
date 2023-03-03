@@ -19,10 +19,15 @@ podTemplate(yaml: '''
         args:
         - 9999999
         volumeMounts:
+        - name: shared-storage
+          mountPath: /mnt
         - name: kaniko-secret
           mountPath: /kaniko/.docker
       restartPolicy: Never
       volumes:
+      - name: shared-storage
+        persistentVolumeClaim:
+          claimName: jenkins-pv-claim
       - name: kaniko-secret
         secret:
             secretName: dockercred
@@ -38,7 +43,6 @@ podTemplate(yaml: '''
           sh '''
           cd /home/jenkins/agent/workspace/week7/Chapter08/sample1
           chmod +x gradlew
-		  sed -i '5 i /** Calc */' /home/jenkins/agent/workspace/week7/Chapter08/sample1/src/main/java/com/lezko/calculator
           ./gradlew build
           mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
           '''
@@ -54,7 +58,7 @@ podTemplate(yaml: '''
           echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
           echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
           mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
-          /kaniko/executor --context `pwd` --destination samuelomonedo/hello-kaniko:1.0
+          /kaniko/executor --context `pwd` --destination samuelomonedo247/hello-kaniko:1.0
           '''
         }
       }
