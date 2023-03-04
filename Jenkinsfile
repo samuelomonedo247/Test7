@@ -1,4 +1,7 @@
-apiVersion: v1
+pipeline {
+  agent {
+    kubernetes {
+	  yaml """"
 kind: Pod
 spec:
       containers:
