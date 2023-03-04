@@ -14,7 +14,7 @@ spec:
     volumeMounts:
     - name: shared-storage
       mountPath: /mnt        
-  - name: kaniko
+    - name: kaniko
       image: gcr.io/kaniko-project/executor:debug
       command:
       - sleep
@@ -27,10 +27,10 @@ spec:
           mountPath: /kaniko/.docker
       restartPolicy: Never
       volumes:
-  - name: shared-storage
+    - name: shared-storage
         persistentVolumeClaim:
           claimName: jenkins-pv-claim
-  - name: kaniko-secret
+    - name: kaniko-secret
     secret:
         secretName: dockercred
         items:
