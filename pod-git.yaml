@@ -7,7 +7,7 @@ spec:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:latest
     args:
-    - "--context=git://github.com/samuelomonedo247/Week7"
+    - "--context=git://github.com/samuelomonedo247/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition"
     - "--destination=somonedo/kaniko-demo-image:1.0"
     volumeMounts:
     - name: kaniko-secret
