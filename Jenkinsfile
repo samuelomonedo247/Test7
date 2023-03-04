@@ -41,7 +41,6 @@ podTemplate(yaml: '''
       container('gradle') {
         stage('Build a gradle project') {
           sh '''
-          cd /home/jenkins/agent/workspace/week7/Chapter08/sample1
           chmod +x gradlew
 		  sed -i '5 i /** Calc */' /home/jenkins/agent/workspace/week7/Chapter08/sample1/src/main/java/com/lezko/calculator
           ./gradlew build
