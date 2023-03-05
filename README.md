@@ -1,1 +1,3 @@
-# Test7
+# Testing 7
+Week 7 
+Assignment
