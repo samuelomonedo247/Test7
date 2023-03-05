@@ -43,7 +43,6 @@ podTemplate(yaml: '''
           sh '''
           cd Chapter08/sample1
           chmod +x gradlew
-          sed -i '5 i /** Calc */' /home/jenkins/agent/workspace/wee7/Chapter08/sample1/src/main/java/com/leszko/calculator.java
           ./gradlew build
           mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
           '''
