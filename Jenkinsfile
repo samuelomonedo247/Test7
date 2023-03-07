@@ -1,5 +1,3 @@
-
-
 podTemplate(yaml: '''
     apiVersion: v1
     kind: Pod
@@ -43,7 +41,7 @@ podTemplate(yaml: '''
       container('gradle') {
         stage('Build a gradle project') {
           sh '''
-          cd /home/jenkins/agent/workspace/week7/Chapter08/sample1
+          cd Chapter08/sample1
           chmod +x gradlew
           ./gradlew build
           mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
@@ -60,7 +58,7 @@ podTemplate(yaml: '''
           echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
           echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
           mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
-          /kaniko/executor --context `pwd` --destination samuelomonedo247/hello-kaniko:1.0
+          /kaniko/executor --context `pwd` --destination somonedo/hello-kaniko:1.0
           '''
         }
       }
