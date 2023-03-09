@@ -97,4 +97,11 @@ podTemplate(yaml: '''
             }
           }
         } catch (e) {
-          currentBuild.result = '
+          currentBuild.result = 'FAILURE'
+          throw e
+        }
+      }	
+    }
+
+  }
+}
