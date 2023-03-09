@@ -49,7 +49,7 @@ pipeline {
 
               try {
                 stage('Build and Test') {
-                  git 'https://github.com/samuelomonedo247/Week7.git'
+                  git 'https://github.com/samuelomonedo247/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
                   container('gradle') {
                     sh '''
                       cd Chapter08/sample1
