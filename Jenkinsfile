@@ -63,45 +63,57 @@ podTemplate(yaml: '''
         }
       }
     }
-
-    stage('Run pipeline against a gradle project - test MAIN') {
-      container('gradle') {
-        try {
-          stage('Checkout code') {
-            checkout scm
+stage("Unit test") {
+            echo "I am the ${env.BRANCH_NAME} branch"
+        if (env.BRANCH_NAME == 'feature') 
+            {
+                   try {
+                    sh '''
+                    pwd
+                    cd Chapter08/sample1
+                    chmod +x gradlew
+                    ./gradlew test
+                    '''
+               }
+         
+               catch (Exception E) {
+                echo 'Failure detected'
+                }
           }
-          stage('Build a gradle project') {
-            sh './gradlew build'
-          }
-          stage('Run tests') {
-            if (env.BRANCH_NAME == "playground") {
-              sh './gradlew test'
-            } else if (env.BRANCH_NAME == "feature") {
-              sh './gradlew test --exclude-task jacocoTestReport'
-            } else if (env.BRANCH_NAME == "master") {
-              sh './gradlew test'
-            }
-          }
-          stage('Create container') {
-            if (env.BRANCH_NAME != "playground") {
-              def imageName = ""
-              def version = ""
-              if (env.BRANCH_NAME == "feature") {
-                imageName = "calculator-feature"
-                version = "0.1"
-              } else if (env.BRANCH_NAME == "master") {
-                imageName = "calculator"
-                version = "1.0"
-              }
-              sh "docker build -t repository/${imageName}:${version} ."
-            }
-          }
-        } catch (e) {
-          currentBuild.result = 'FAILURE'
-          throw e
         }
-      }	
+        stage("Code coverage") {
+            echo "I am the ${env.BRANCH_NAME} branch"
+        if (env.BRANCH_NAME != 'feature') 
+            {
+                try {
+                  sh '''
+                  pwd
+                    cd Chapter08/sample1
+                    chmod +x gradlew
+                    ./gradlew jacocoTestCoverageVerification
+                    ./gradlew jacocoTestReport '''
+                } 
+          
+         catch (Exception E) {
+                  echo 'Failure detected'
+                }
+         }
+        }
+        stage("Code checkstyle") {
+           echo "I am the ${env.BRANCH_NAME} branch"
+       if (env.BRANCH_NAME == 'feature') 
+        {
+           try {
+            sh '''
+            pwd
+            cd Chapter08/sample1
+              chmod +x gradlew
+              ./gradlew checkstyleMain
+              ./gradlew jacocoTestReport '''
+       }   
+           
+            catch (Exception E) {
+            echo 'Failure detected'
+          }
+     }
     }
-
-  }
-}
